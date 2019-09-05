@@ -1,0 +1,4 @@
+{    
+    "redis":"192.168.1.1:6379",
+    "mysql":"readonly:tYeiIO548G@tcp(192.168.1.2:3306)/admin"
+}
