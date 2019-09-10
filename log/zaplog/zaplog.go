@@ -28,11 +28,12 @@ func noExt(path string) string {
 }
 
 func autologfilename() string {
-	strPath := "./log/" + noExt(os.Args[0]) + "/"
+	strNoExt := noExt(os.Args[0])
+	strPath := "./log/" + strNoExt + "/"
 	fmt.Println("保存日志", strPath)
 	os.MkdirAll(strPath, os.ModePerm)
 
-	strFilename := strPath + time.Now().Format("20060102") + ".log"
+	strFilename := strPath + strNoExt + ".log"
 	return strFilename
 }
 
@@ -62,12 +63,12 @@ func Printf(template string, args ...interface{}) {
 
 // Print 为了兼容
 func Print(args ...interface{}) {
-	theZap.Debug(args...)
+	theZap.Info(args...)
 }
 
 // Println 为了兼容
 func Println(args ...interface{}) {
-	theZap.Debug(args...)
+	theZap.Info(args...)
 }
 
 // Debug ()
