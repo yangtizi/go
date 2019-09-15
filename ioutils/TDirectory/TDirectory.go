@@ -32,14 +32,14 @@ func getAllFile(pathname string, s TStringDynArray) (TStringDynArray, error) {
 	}
 	for _, fi := range rd {
 		if fi.IsDir() {
-			fullDir := pathname + "/" + fi.Name()
+			fullDir := pathname + fi.Name() + "/"
 			s, err = getAllFile(fullDir, s)
 			if err != nil {
 				fmt.Println("read dir fail:", err)
 				return s, err
 			}
 		} else {
-			fullName := pathname + "/" + fi.Name()
+			fullName := pathname + fi.Name()
 			s = append(s, fullName)
 		}
 	}
