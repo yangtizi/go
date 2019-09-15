@@ -68,7 +68,6 @@ func Print(args ...interface{}) {
 
 // Println 为了兼容
 func Println(args ...interface{}) {
-	fmt.Println(args)
 	theZap.Info(args...)
 }
 
