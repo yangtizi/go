@@ -1,9 +1,8 @@
 package tdirectory
 
 import (
-	"fmt"
-	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
 // import "github.com/yangtizi/go/ioutils"
@@ -23,35 +22,56 @@ const (
 )
 
 // https://www.cnblogs.com/del/archive/2009/10/16/1584660.html
-
-func getAllFile(pathname string, s TStringDynArray) (TStringDynArray, error) {
-	rd, err := ioutil.ReadDir(pathname)
-	if err != nil {
-		fmt.Println("read dir fail:", err)
-		return s, err
-	}
-	for _, fi := range rd {
-		if fi.IsDir() {
-			fullDir := pathname + fi.Name() + "/"
-			s, err = getAllFile(fullDir, s)
-			if err != nil {
-				fmt.Println("read dir fail:", err)
-				return s, err
-			}
-		} else {
-			fullName := pathname + fi.Name()
-			s = append(s, fullName)
-		}
-	}
-	return s, nil
-}
+// Walk 的具体实现在这里
+// func getAllFile(pathname string, s TStringDynArray) (TStringDynArray, error) {
+// 	rd, err := ioutil.ReadDir(pathname)
+// 	if err != nil {
+// 		fmt.Println("read dir fail:", err)
+// 		return s, err
+// 	}
+// 	for _, fi := range rd {
+// 		if fi.IsDir() {
+// 			fullDir := pathname + fi.Name() + "/"
+// 			s, err = getAllFile(fullDir, s)
+// 			if err != nil {
+// 				fmt.Println("read dir fail:", err)
+// 				return s, err
+// 			}
+// 		} else {
+// 			fullName := pathname + fi.Name()
+// 			s = append(s, fullName)
+// 		}
+// 	}
+// 	return s, nil
+// }
 
 // GetFiles 使用通配符(暂时不支持通配符功能)
 func GetFiles(strPath, strSearchPattern string, SearchOption TSearchOption) (TStringDynArray, error) {
 	var files TStringDynArray
-	files, err := getAllFile(strPath, files)
+	filepath.Walk(strPath, func(strFilename string, info os.FileInfo, err error) error {
+		if info.IsDir() {
+			return err
+		}
 
-	return files, err
+		strFilename = filepath.ToSlash(strFilename)
+
+		// 影响效率的通配符
+		// b, err := filepath.Match(strSearchPattern, filepath.Base(strFilename))
+		// if err != nil {
+		// 	return err
+		// }
+
+		// if !b {
+		//     return err
+		// }
+
+		files = append(files, strFilename)
+
+		return err
+	})
+
+	// files, _ := getAllFile(strPath, files)
+	return files, nil
 }
 
 // CreateDirectory 建立新目录
