@@ -45,6 +45,26 @@ const (
 // 	return s, nil
 // }
 
+// GetFilesAndDir 获取文件夹和dir
+func GetFilesAndDir(strPath string) (TStringDynArray, TStringDynArray, error) {
+	var files TStringDynArray
+	var dirs TStringDynArray
+	filepath.Walk(strPath, func(strFilename string, info os.FileInfo, err error) error {
+		strFilename = filepath.ToSlash(strFilename)
+
+		if info.IsDir() {
+			dirs = append(dirs, strFilename)
+			return err
+		}
+
+		files = append(files, strFilename)
+		return err
+	})
+
+	// files, _ := getAllFile(strPath, files)
+	return files, dirs, nil
+}
+
 // GetFiles 使用通配符(暂时不支持通配符功能)
 func GetFiles(strPath, strSearchPattern string, SearchOption TSearchOption) (TStringDynArray, error) {
 	var files TStringDynArray
@@ -76,12 +96,16 @@ func GetFiles(strPath, strSearchPattern string, SearchOption TSearchOption) (TSt
 
 // CreateDirectory 建立新目录
 func CreateDirectory(path string) error {
-	return os.MkdirAll(path, os.ModePerm)
+	if !Exists(path) {
+		return os.MkdirAll(path, os.ModePerm)
+	}
+	return nil
 }
 
 // Exists 判断文件夹是否存在
 func Exists(path string) bool {
-	return false
+	_, err := os.Stat(path)
+	return err == nil || os.IsExist(err)
 }
 
 // IsEmpty 判断文件夹是否为空
