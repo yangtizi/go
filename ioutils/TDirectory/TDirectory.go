@@ -50,12 +50,14 @@ func GetFilesAndDir(strPath string) (TStringDynArray, TStringDynArray, error) {
 	var files TStringDynArray
 	var dirs TStringDynArray
 	filepath.Walk(strPath, func(strFilename string, info os.FileInfo, err error) error {
-		strFilename = filepath.ToSlash(strFilename)
-
-		if info.IsDir() {
-			dirs = append(dirs, strFilename)
+		if err != nil {
 			return err
 		}
+		if info.IsDir() {
+			// dirs = append(dirs, strFilename)
+			return err
+		}
+		strFilename = filepath.ToSlash(strFilename)
 
 		files = append(files, strFilename)
 		return err
@@ -69,6 +71,9 @@ func GetFilesAndDir(strPath string) (TStringDynArray, TStringDynArray, error) {
 func GetFiles(strPath, strSearchPattern string, SearchOption TSearchOption) (TStringDynArray, error) {
 	var files TStringDynArray
 	filepath.Walk(strPath, func(strFilename string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 		if info.IsDir() {
 			return err
 		}
