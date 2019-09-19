@@ -47,17 +47,18 @@ const (
 
 // GetFilesAndDir 获取文件夹和dir
 func GetFilesAndDir(strPath string) (TStringDynArray, TStringDynArray, error) {
+
 	var files TStringDynArray
 	var dirs TStringDynArray
 	filepath.Walk(strPath, func(strFilename string, info os.FileInfo, err error) error {
+		strFilename = filepath.ToSlash(strFilename)
 		if err != nil {
 			return err
 		}
 		if info.IsDir() {
-			// dirs = append(dirs, strFilename)
+			dirs = append(dirs, strFilename)
 			return err
 		}
-		strFilename = filepath.ToSlash(strFilename)
 
 		files = append(files, strFilename)
 		return err
