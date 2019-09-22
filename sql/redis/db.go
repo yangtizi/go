@@ -17,12 +17,18 @@ func (self TValues) I(n int) int {
 	if n > len(self) {
 		return 0
 	}
+	if self[n] == nil {
+		return 0
+	}
 	return sysutils.StrToIntDef(string(self[n].([]byte)), 0)
 }
 
 // S 快速获取字符串
 func (self TValues) S(n int) string {
 	if n > len(self) {
+		return ""
+	}
+	if self[n] == nil {
 		return ""
 	}
 	return string(self[n].([]byte))

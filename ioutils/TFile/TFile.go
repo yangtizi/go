@@ -49,3 +49,8 @@ func Copy(src, dst string) (int64, error) {
 func Move(src, dst string) error {
 	return os.Rename(src, dst)
 }
+
+// Delete 删除文件
+func Delete(s string) error {
+	return os.Remove(s)
+}

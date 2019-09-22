@@ -83,3 +83,8 @@ func StringReplaceAll(s, old, new string) string {
 func UpperCase(s string) string {
 	return strings.ToUpper(s)
 }
+
+// Trim 去掉格式化
+func Trim(s string) string {
+	return strings.Trim(s, " ")
+}
