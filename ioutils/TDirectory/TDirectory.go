@@ -3,6 +3,7 @@ package tdirectory
 import (
 	"os"
 	"path/filepath"
+	"time"
 )
 
 // import "github.com/yangtizi/go/ioutils"
@@ -47,7 +48,6 @@ const (
 
 // GetFilesAndDir 获取文件夹和dir
 func GetFilesAndDir(strPath string) (TStringDynArray, TStringDynArray, error) {
-
 	var files TStringDynArray
 	var dirs TStringDynArray
 	filepath.Walk(strPath, func(strFilename string, info os.FileInfo, err error) error {

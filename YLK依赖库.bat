@@ -1,8 +1,16 @@
-go get -v github.com/davecgh/go-spew/spew
-go get -v github.com/pmezard/go-difflib/difflib
-go get -v gopkg.in/yaml.v2
-go get -v github.com/valyala/fasthttp
-go get -v go.uber.org/zap
-go get -v go.uber.org/zap/zapcore
-go get -v gopkg.in/natefinch/lumberjack.v2    
-go get -v github.com/denisenkom/go-mssqldb
+go get -u -v github.com/davecgh/go-spew/spew
+go get -u -v github.com/pmezard/go-difflib/difflib
+go get -u -v gopkg.in/yaml.v2
+go get -u -v github.com/valyala/fasthttp
+go get -u -v go.uber.org/zap
+go get -u -v gopkg.in/natefinch/lumberjack.v2    
+go get -u -v github.com/denisenkom/go-mssqldb
+go get -u -v github.com/labstack/gommon/log
+go get -u -v github.com/go-sql-driver/mysql
+go get -v -u github.com/kataras/iris
+go get -v -u github.com/yangtizi/go
+go get -v -u github.com/russross/blackfriday
+go get -v -u github.com/satori/go.uuid
+go get -v -u github.com/gorilla/websocket
+go get -v -u github.com/gomodule/redigo
+go get -v -u github.com/valyala/fasttemplate
