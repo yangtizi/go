@@ -13,7 +13,6 @@ import (
 	_ "github.com/satori/go.uuid"             // .
 	_ "github.com/valyala/fasthttp"           // .
 	_ "github.com/valyala/fasttemplate"       // .
-	_ "github.com/yangtizi/go"                // .
 	_ "go.uber.org/zap"                       // .
 	_ "gopkg.in/natefinch/lumberjack.v2"      // .
 	_ "gopkg.in/yaml.v2"                      // .
