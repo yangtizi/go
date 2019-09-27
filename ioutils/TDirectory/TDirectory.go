@@ -3,7 +3,6 @@ package tdirectory
 import (
 	"os"
 	"path/filepath"
-	"time"
 )
 
 // import "github.com/yangtizi/go/ioutils"
