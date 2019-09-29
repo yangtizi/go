@@ -7,7 +7,7 @@ import (
 
 // MakedownToHTML 转换成普通的
 func MakedownToHTML(md []byte) []byte {	
-	u := blackfriday.Run(md)
+	u := blackfriday.MarkdownCommon(md)
 	html := bluemonday.UGCPolicy().SanitizeBytes(u)
 
 	return html
