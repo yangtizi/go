@@ -18,7 +18,7 @@ func JSONParsing(strPath string, v interface{}) {
 	f, err := os.Open(strPath)
 	// f,err :=  io.ReadFile(strPath)
 	if err != nil {
-		log.Println(err)
+		log.Errorf("%v", err)
 	}
 	defer f.Close()
 

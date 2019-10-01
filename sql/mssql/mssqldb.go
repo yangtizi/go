@@ -31,11 +31,12 @@ func (self *TMsSQLDB) init(strConnect string) {
 		return
 	}
 
-	log.Println("数据库连接出现问题 connect = ", strConnect, " err = ", err)
+	log.Errorf("数据库连接出现问题 connect = [%s]", strConnect, " err = ", err)
 }
 
 func (self *TMsSQLDB) queryRow(strQuery string, args ...interface{}) (*scanner.TRow, error) {
 	if self.pDB == nil {
+		log.Errorf("queryRow [db == nil]")
 		return nil, errors.New("不存在DB")
 	}
 
@@ -48,6 +49,7 @@ func (self *TMsSQLDB) queryRow(strQuery string, args ...interface{}) (*scanner.T
 
 func (self *TMsSQLDB) queryRows(strQuery string, args ...interface{}) (*scanner.TRows, error) {
 	if self.pDB == nil {
+		log.Errorf("queryRows [db == nil]")
 		return nil, errors.New("不存在DB")
 	}
 	self.chpool <- 1
@@ -57,8 +59,8 @@ func (self *TMsSQLDB) queryRows(strQuery string, args ...interface{}) (*scanner.
 }
 
 func (self *TMsSQLDB) exec(strQuery string, args ...interface{}) (*scanner.TResult, error) {
-
 	if self.pDB == nil {
+		log.Errorf("exec [db == nil]")
 		return nil, errors.New("不存在DB")
 	}
 

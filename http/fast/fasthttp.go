@@ -9,13 +9,16 @@ import (
 
 // StartServer (地址)
 func StartServer(strAddress string) {
+	defer log.Infof("服务器", strAddress, "已经关闭") //
+
 	if len(strAddress) <= 0 { //
-		log.Println("错误的Address", strAddress) //
+		log.Errorf("错误的Address = [%s]", strAddress) //
+		return
 	} //
-	log.Println("服务器", strAddress, "正在开启")                      //
+	log.Infof("服务器 [%s] 正在开启", strAddress)                      //
 	err := fasthttp.ListenAndServe(strAddress, fastHTTPHandler) //
 	if err != nil {                                             //
-		log.Println("fasthttp", err) //
+		log.Errorf("fasthttp.ListenAndServe错误 = [%v]", err) //
 	} //
-	log.Println("服务器", strAddress, "已经关闭") //
+
 }

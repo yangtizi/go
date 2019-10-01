@@ -13,6 +13,8 @@ var mapMYSQL sync.Map
 
 // QueryRow (strAgent 代理商编号, strQuery sql脚本, args 脚本参数)
 func QueryRow(strAgent string, strQuery string, args ...interface{}) (*sql.Row, error) {
+	log.Debugf("strAgent = [%s], strQuery = [%s]", strAgent, strQuery)
+	log.Debug("[+] ", args)
 	v, ok := mapMYSQL.Load(strAgent)
 	if !ok {
 		return nil, errors.New("不存在的DB索引")
@@ -23,6 +25,8 @@ func QueryRow(strAgent string, strQuery string, args ...interface{}) (*sql.Row, 
 
 // QueryRows (strAgent 代理商编号, strQuery sql脚本, args 脚本参数)
 func QueryRows(strAgent string, strQuery string, args ...interface{}) (*sql.Rows, error) {
+	log.Debugf("strAgent = [%s], strQuery = [%s]", strAgent, strQuery)
+	log.Debug("[+] ", args)
 	v, ok := mapMYSQL.Load(strAgent)
 	if !ok {
 		return nil, errors.New("不存在的DB索引")
@@ -33,6 +37,8 @@ func QueryRows(strAgent string, strQuery string, args ...interface{}) (*sql.Rows
 
 // Exec (strAgent 代理商编号, strQuery sql脚本, args 脚本参数)
 func Exec(strAgent string, strQuery string, args ...interface{}) (sql.Result, error) {
+	log.Debugf("strAgent = [%s], strQuery = [%s]", strAgent, strQuery)
+	log.Debug("[+] ", args)
 	v, ok := mapMYSQL.Load(strAgent)
 	if !ok {
 		return nil, errors.New("不存在的DB索引")

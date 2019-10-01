@@ -58,6 +58,7 @@ func HMGet(strAgent string, args ...interface{}) (TValues, error) {
 
 // InitDB 初始化DB (strAgent 代理商编号, strReadConnect 从库连接字符串, strWriteConnect 主库连接字符串)
 func InitDB(strAgent string, strConnect string) {
+	log.Debugf("strAgent = [%s], strConnect = [%s]", strAgent, strConnect)
 	_, ok := mapRedis.Load(strAgent)
 	if !ok {
 		// * 创建新的DB指针
@@ -67,5 +68,5 @@ func InitDB(strAgent string, strConnect string) {
 		return
 	}
 
-	log.Println("已经存在确有重复创建")
+	log.Warnf("已经存在确有重复创建")
 }

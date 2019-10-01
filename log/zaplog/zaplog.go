@@ -131,7 +131,7 @@ func Panicf(template string, args ...interface{}) {
 	theZap.Panicf(template, args...)
 }
 
-// Fatal () 不收尾强退, 最恶性BUG
+// Fatal ()
 func Fatal(args ...interface{}) {
 	theZap.Fatal(args...)
 }

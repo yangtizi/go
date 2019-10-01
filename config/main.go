@@ -1,9 +1,8 @@
 package main
 
 import (
-	"log"
-
 	"github.com/yangtizi/go/config/jsonconfig"
+	log "github.com/yangtizi/go/log/zaplog"
 )
 
 // SConfig 配置
@@ -21,6 +20,5 @@ func main() {
 func loadConfigDemo() {
 	cfg = &SConfig{}
 	jsonconfig.JSONParsing("./config.json", cfg)
-
-	log.Println("加载的配置是", cfg)
+	log.Infof("加载的配置是cfg = [%v]", cfg)
 }
