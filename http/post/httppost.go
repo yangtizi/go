@@ -56,7 +56,7 @@ func Bytes(strURL string, buf []byte) ([]byte, error) {
 		log.Println(err)
 	}
 
-	// log.Println(string(body))
+	// log.Println(string(body))PEv0nLUQnWjFcCiv PEv0nLUQnWjFcCiv PEv0nLUQnWjFcCiv PEv0nLUQnWjFcCiv
 	return body, err
 }
 
