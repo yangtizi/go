@@ -30,7 +30,7 @@ func noExt(path string) string {
 func autologfilename() string {
 	strNoExt := noExt(os.Args[0])
 	strPath := "./log/" + strNoExt + "/"
-	fmt.Println("保存日志", strPath)
+	fmt.Println("[√] zaplog 正常保存日志", strPath)
 	os.MkdirAll(strPath, os.ModePerm)
 
 	strFilename := strPath + strNoExt + ".log"
@@ -78,7 +78,7 @@ func Debug(args ...interface{}) {
 
 // Debugf ()
 func Debugf(template string, args ...interface{}) {
-	theZap.Debugf(template, args...)
+	theZap.Debugf("[+] "+template, args...)
 }
 
 // Info ()
@@ -88,7 +88,7 @@ func Info(args ...interface{}) {
 
 // Infof ()
 func Infof(template string, args ...interface{}) {
-	theZap.Infof(template, args...)
+	theZap.Infof("[√] "+template, args...)
 }
 
 // Warn ()
@@ -98,7 +98,7 @@ func Warn(args ...interface{}) {
 
 // Warnf ()
 func Warnf(template string, args ...interface{}) {
-	theZap.Warnf(template, args...)
+	theZap.Warnf("[!] "+template, args...)
 }
 
 // Error ()
@@ -108,7 +108,7 @@ func Error(args ...interface{}) {
 
 // Errorf ()
 func Errorf(template string, args ...interface{}) {
-	theZap.Errorf(template, args...)
+	theZap.Errorf("[x] "+template, args...)
 }
 
 // DPanic ()
@@ -131,7 +131,7 @@ func Panicf(template string, args ...interface{}) {
 	theZap.Panicf(template, args...)
 }
 
-// Fatal ()
+// Fatal () 不收尾强退, 最恶性BUG
 func Fatal(args ...interface{}) {
 	theZap.Fatal(args...)
 }
