@@ -119,6 +119,11 @@ func (self *TRows) Close() error {
 	return self.rows.Close()
 }
 
+// GetRows 得到Rows
+func (self *TRows) GetRows() *sql.Rows {
+	return self.rows
+}
+
 // TResult 结果
 type TResult struct {
 	r sql.Result
