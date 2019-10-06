@@ -69,6 +69,36 @@ func NewRows(rows *sql.Rows) *TRows {
 	return r
 }
 
+// Unknown 未知搜索
+func (self *TRows) Unknown() ([]*string, error) {
+	columns, err := self.GetRows().Columns()
+	if err != nil {
+		return nil, err
+	}
+	nLen := len(columns)
+
+	// 根据长度来设置
+	args2 := []interface{}{}
+
+	for i := 0; i < nLen; i++ {
+		args2 = append(args2, &sql.NullString{})
+	}
+
+	err = self.rows.Scan(args2...)
+	if err != nil {
+		return nil, err
+	}
+
+	args1 := []*string{}
+
+	for _, v := range args2 {
+		// 插入进来
+		args1 = append(args1, &(v.(*sql.NullString).String))
+	}
+
+	return args1, nil
+}
+
 // Scan 新搜索
 func (self *TRows) Scan(args ...interface{}) error {
 	args2 := []interface{}{}
