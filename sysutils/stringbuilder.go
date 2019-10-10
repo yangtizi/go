@@ -2,6 +2,7 @@ package sysutils
 
 import (
 	"bytes"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -69,4 +70,11 @@ func (self *TStringBuilder) Clear() *TStringBuilder {
 // ToString .
 func (self *TStringBuilder) ToString() string {
 	return self.buffer.String()
+}
+
+// AppendFormat 格式化
+func (self *TStringBuilder) AppendFormat(format string, a ...interface{}) *TStringBuilder {
+	s := fmt.Sprintf(format, a...)
+	self.Append(s)
+	return self
 }
