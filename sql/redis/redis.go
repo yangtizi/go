@@ -20,18 +20,10 @@ func (self *TRedisDB) init(strConnect string) {
 	}
 }
 
-func (self *TRedisDB) do(strCommand string, args ...interface{}) (interface{}, error) {
+func (self *TRedisDB) do(strCommand string, args ...interface{}) (TValues, error) {
 	if self.redisConn == nil {
 		return nil, errors.New("不存在DB")
 	}
 
-	return self.redisConn.Do(strCommand, args...)
-}
-
-func (self *TRedisDB) hmget(args ...interface{}) ([]interface{}, error) {
-	if self.redisConn == nil {
-		return nil, errors.New("不存在DB")
-	}
-
-	return r.Values(self.redisConn.Do("hmget", args...))
+	return r.Values(self.redisConn.Do(strCommand, args...))
 }

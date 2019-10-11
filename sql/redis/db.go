@@ -37,7 +37,7 @@ func (self TValues) S(n int) string {
 var mapRedis sync.Map
 
 // Do (strAgent 代理商编号, strCommand sql脚本, args 脚本参数)
-func Do(strAgent string, strCommand string, args ...interface{}) (interface{}, error) {
+func Do(strAgent string, strCommand string, args ...interface{}) (TValues, error) {
 	v, ok := mapRedis.Load(strAgent)
 	if !ok {
 		return nil, errors.New("不存在的DB索引")
@@ -53,7 +53,16 @@ func HMGet(strAgent string, args ...interface{}) (TValues, error) {
 		return nil, errors.New("不存在的DB索引")
 	}
 
-	return v.(*TRedisDB).hmget(args...)
+	return v.(*TRedisDB).do("hmget", args...)
+}
+
+func HMSet(strAgent string, args ...interface{}) (TValues, error) {
+	v, ok := mapRedis.Load(strAgent)
+	if !ok {
+		return nil, errors.New("不存在的DB索引")
+	}
+
+	return v.(*TRedisDB).do("hmset", args...)
 }
 
 // InitDB 初始化DB (strAgent 代理商编号, strReadConnect 从库连接字符串, strWriteConnect 主库连接字符串)
