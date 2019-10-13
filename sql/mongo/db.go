@@ -10,11 +10,20 @@ import (
 )
 
 var mapMongo sync.Map
+var instance *TMongoDB
 
 // GetTable 获取表格
-func GetTable(strAgent, strDatabase, strCollection string) (*mgo.Collection, error) {
-	log.Debugf("%s, %s, %s", strAgent, strDatabase, strCollection)
-	v, ok := mapMongo.Load(strAgent)
+func GetTable(agent interface{}, strDatabase, strCollection string) (*mgo.Collection, error) {
+	if agent == nil {
+		if instance == nil {
+			return nil, errors.New("不存在的DB索引")
+		}
+		return instance.pDB.DB(strDatabase).C(strCollection), nil
+	}
+
+	log.Debugf("%v, %s, %s", agent, strDatabase, strCollection)
+
+	v, ok := mapMongo.Load(agent)
 	if !ok {
 		log.Errorf("Exec 不存在索引")
 		return nil, errors.New("不存在的DB索引")
@@ -23,15 +32,20 @@ func GetTable(strAgent, strDatabase, strCollection string) (*mgo.Collection, err
 }
 
 // InitDB 初始化DB (strAgent 代理商编号, strConnect 从库连接字符串)
-func InitDB(strAgent string, strConnect string) {
-	_, ok := mapMongo.Load(strAgent)
+func InitDB(agent interface{}, strConnect string) {
+	if agent == nil {
+		instance = NewDB(strConnect)
+		return
+	}
+
+	_, ok := mapMongo.Load(agent)
 
 	if !ok {
 		// * 创建新的DB指针
 		pMongo := NewDB(strConnect)
 
-		log.Infof("正在连接数据库 strAgent = [%s], strConnect = [%s]", strAgent, strConnect)
-		mapMongo.Store(strAgent, pMongo)
+		log.Infof("正在连接数据库 agent = [%v], strConnect = [%s]", agent, strConnect)
+		mapMongo.Store(agent, pMongo)
 		return
 	}
 

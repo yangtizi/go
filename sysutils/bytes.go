@@ -1,6 +1,9 @@
 package sysutils
 
-import "math/rand"
+import (
+	"bytes"
+	"math/rand"
+)
 
 // NewBytes 新建byte
 func NewBytes(n int) []byte {
@@ -17,4 +20,13 @@ func NewRandomBytes(n int) []byte {
 	}
 
 	return b
+}
+
+// Concat 连接
+func Concat(a []byte, b []byte) []byte {
+	buff := bytes.NewBuffer([]byte{})
+
+	buff.Write(a)
+	buff.Write(b)
+	return buff.Bytes()
 }
