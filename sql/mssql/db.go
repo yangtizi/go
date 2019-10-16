@@ -1,6 +1,7 @@
 package mssql
 
 import (
+	"database/sql"
 	"errors"
 	"sync"
 
@@ -48,6 +49,18 @@ func Exec(strAgent string, strQuery string, args ...interface{}) (*scanner.TResu
 	}
 
 	return v.(*TMsSQLDB).exec(strQuery, args...)
+}
+
+// Transaction 事务
+func Transaction(agent interface{}) (*sql.Tx, error) {
+	log.Debugf("Transaction begin")
+	v, ok := mapMSSQL.Load(agent)
+	if !ok {
+		log.Errorf("Transaction 不存在索引")
+		return nil, errors.New("不存在的DB索引")
+	}
+
+	return v.(*TMsSQLDB).transaction()
 }
 
 // InitDB 初始化DB (strAgent 代理商编号, strConnect 从库连接字符串)
