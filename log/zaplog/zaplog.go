@@ -45,7 +45,7 @@ func init() {
 		MaxSize:   50,
 		LocalTime: true,
 		Compress:  true, //是否压缩
-		MaxAge:    10,   // 文件最多保存多少天
+		MaxAge:    60,   // 文件最多保存多少天
 	})
 	encoder := zap.NewProductionEncoderConfig()
 	encoder.EncodeTime = func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
