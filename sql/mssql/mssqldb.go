@@ -69,3 +69,15 @@ func (self *TMsSQLDB) exec(strQuery string, args ...interface{}) (*scanner.TResu
 	<-self.chpool
 	return scanner.NewResult(rs), err
 }
+
+func (self *TMsSQLDB) transaction() (*sql.Tx, error) {
+	if self.pDB == nil {
+		log.Errorf("transaction")
+		return nil, errors.New("不存在DB")
+	}
+
+	self.chpool <- 1
+	tx, err := self.pDB.Begin()
+	<-self.chpool
+	return tx, err
+}
