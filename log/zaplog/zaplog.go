@@ -24,7 +24,7 @@ func noExt(path string) string {
 			return path[0:i]
 		}
 	}
-	return ""
+	return path
 }
 
 func autologfilename() string {
