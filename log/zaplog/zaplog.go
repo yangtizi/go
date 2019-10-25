@@ -103,11 +103,14 @@ func Warnf(template string, args ...interface{}) {
 
 // Error ()
 func Error(args ...interface{}) {
+	fmt.Println(args)
 	theZap.Error(args...)
 }
 
 // Errorf ()
 func Errorf(template string, args ...interface{}) {
+	fmt.Printf(template, args)
+	fmt.Println()
 	theZap.Errorf("[x] "+template, args...)
 }
 
