@@ -12,11 +12,11 @@ import (
 
 var mapMSSQL sync.Map
 
-// QueryRow (strAgent 代理商编号, strQuery sql脚本, args 脚本参数)
-func QueryRow(strAgent string, strQuery string, args ...interface{}) (*scanner.TRow, error) {
-	log.Debugf("strAgent = [%s], strQuery = [%s]", strAgent, strQuery)
+// QueryRow (agent 代理商编号, strQuery sql脚本, args 脚本参数)
+func QueryRow(agent interface{}, strQuery string, args ...interface{}) (*scanner.TRow, error) {
+	log.Debugf("agent = [%v], strQuery = [%s]", agent, strQuery)
 	log.Debug("[+] ", args)
-	v, ok := mapMSSQL.Load(strAgent)
+	v, ok := mapMSSQL.Load(agent)
 	if !ok {
 		log.Errorf("QueryRow 不存在索引")
 		return nil, errors.New("不存在的DB索引")
@@ -25,11 +25,11 @@ func QueryRow(strAgent string, strQuery string, args ...interface{}) (*scanner.T
 	return v.(*TMsSQLDB).queryRow(strQuery, args...)
 }
 
-// QueryRows (strAgent 代理商编号, strQuery sql脚本, args 脚本参数)
-func QueryRows(strAgent string, strQuery string, args ...interface{}) (*scanner.TRows, error) {
-	log.Debugf("strAgent = [%s], strQuery = [%s]", strAgent, strQuery)
+// QueryRows (agent 代理商编号, strQuery sql脚本, args 脚本参数)
+func QueryRows(agent interface{}, strQuery string, args ...interface{}) (*scanner.TRows, error) {
+	log.Debugf("agent = [%v], strQuery = [%s]", agent, strQuery)
 	log.Debug("[+] ", args)
-	v, ok := mapMSSQL.Load(strAgent)
+	v, ok := mapMSSQL.Load(agent)
 	if !ok {
 		log.Errorf("QueryRows 不存在索引")
 		return nil, errors.New("不存在的DB索引")
@@ -38,11 +38,11 @@ func QueryRows(strAgent string, strQuery string, args ...interface{}) (*scanner.
 	return v.(*TMsSQLDB).queryRows(strQuery, args...)
 }
 
-// Exec (strAgent 代理商编号, strQuery sql脚本, args 脚本参数)
-func Exec(strAgent string, strQuery string, args ...interface{}) (*scanner.TResult, error) {
-	log.Debugf("strAgent = [%s], strQuery = [%s]", strAgent, strQuery)
+// Exec (agent 代理商编号, strQuery sql脚本, args 脚本参数)
+func Exec(agent interface{}, strQuery string, args ...interface{}) (*scanner.TResult, error) {
+	log.Debugf("agent = [%v], strQuery = [%s]", agent, strQuery)
 	log.Debug("[+] ", args)
-	v, ok := mapMSSQL.Load(strAgent)
+	v, ok := mapMSSQL.Load(agent)
 	if !ok {
 		log.Errorf("Exec 不存在索引")
 		return nil, errors.New("不存在的DB索引")
@@ -63,15 +63,15 @@ func Transaction(agent interface{}) (*sql.Tx, error) {
 	return v.(*TMsSQLDB).transaction()
 }
 
-// InitDB 初始化DB (strAgent 代理商编号, strConnect 从库连接字符串)
-func InitDB(strAgent string, strConnect string) {
-	_, ok := mapMSSQL.Load(strAgent)
+// InitDB 初始化DB (agent 代理商编号, strConnect 从库连接字符串)
+func InitDB(agent interface{}, strConnect string) {
+	_, ok := mapMSSQL.Load(agent)
 	if !ok {
 		// * 创建新的DB指针
 		pMsSQL := NewDB(strConnect)
 
-		log.Infof("正在连接数据库 strAgent = [%s], strConnect = [%s]", strAgent, strConnect)
-		mapMSSQL.Store(strAgent, pMsSQL)
+		log.Infof("正在连接数据库 agent = [%v], strConnect = [%s]", agent, strConnect)
+		mapMSSQL.Store(agent, pMsSQL)
 		return
 	}
 
