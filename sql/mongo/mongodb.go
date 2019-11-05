@@ -5,12 +5,14 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
+// TMongoDB .
 type TMongoDB struct {
 	chpool     chan int
 	strConnect string
 	pDB        *mgo.Session
 }
 
+// NewDB 新DB
 func NewDB(strConnect string) *TMongoDB {
 	p := &TMongoDB{}
 	p.init(strConnect)
