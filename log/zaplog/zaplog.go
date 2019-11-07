@@ -109,8 +109,7 @@ func Error(args ...interface{}) {
 
 // Errorf ()
 func Errorf(template string, args ...interface{}) {
-	fmt.Printf(template, args)
-	fmt.Println()
+	fmt.Println(template, args)
 	theZap.Errorf("[x] "+template, args...)
 }
 
