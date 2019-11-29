@@ -3,6 +3,7 @@ package tfile
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 )
 
@@ -53,4 +54,10 @@ func Move(src, dst string) error {
 // Delete 删除文件
 func Delete(s string) error {
 	return os.Remove(s)
+}
+
+// OpenRead 读取一个文件
+func OpenRead(s string) ([]byte, error) {
+	b, err := ioutil.ReadFile(s)
+	return b, err
 }
