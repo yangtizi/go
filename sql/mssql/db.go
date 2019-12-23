@@ -75,5 +75,5 @@ func InitDB(agent interface{}, strConnect string) {
 		return
 	}
 
-	log.Println("已经存在确有重复创建")
+	// log.Println("已经存在确有重复创建")
 }
