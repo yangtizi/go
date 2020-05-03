@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 )
 
-// import "github.com/yangtizi/go/ioutils"
+// import "yangtizi/ioutils"
 
 // TStringDynArray .
 type TStringDynArray []string

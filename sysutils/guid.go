@@ -9,7 +9,7 @@ import (
 
 // GenUUID 获取uuid xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 func GenUUID() string {
-	guid, _ := uuid.NewV4()
+	guid := uuid.NewV4()
 	strGUID := guid.String()
 	strGUID = StringReplaceAll(strGUID, "-", "")
 	strGUID = UpperCase(strGUID)
@@ -18,7 +18,7 @@ func GenUUID() string {
 
 // GenGUID 生成GUID xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 func GenGUID() string {
-	guid, _ := uuid.NewV4()
+	guid := uuid.NewV4()
 	strGUID := guid.String()
 	strGUID = UpperCase(strGUID)
 	return strGUID

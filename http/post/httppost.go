@@ -7,7 +7,8 @@ import (
 	"net/url"
 	"strings"
 
-	log "github.com/yangtizi/go/log/zaplog"
+	log "yangtizi/log/zaplog"
+
 	"golang.org/x/net/proxy"
 )
 

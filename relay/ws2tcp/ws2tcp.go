@@ -5,7 +5,8 @@ import (
 	"net"
 	"net/http"
 
-	log "github.com/yangtizi/go/log/zaplog"
+	log "yangtizi/log/zaplog"
+
 	"golang.org/x/net/websocket"
 )
 

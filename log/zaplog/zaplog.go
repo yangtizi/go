@@ -11,7 +11,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-// import log "github.com/yangtizi/go/log/zaplog"
+// import log "yangtizi/log/zaplog"
 
 // theZap 新的日志库,据说性能更好
 var theZap *zap.SugaredLogger
@@ -103,7 +103,7 @@ func Warnf(template string, args ...interface{}) {
 
 // Error ()
 func Error(args ...interface{}) {
-	fmt.Println(args)
+	fmt.Println(args...)
 	theZap.Error(args...)
 }
 

@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/yangtizi/go/crypto/aes"
-	"github.com/yangtizi/go/crypto/zlib"
+	"yangtizi/crypto/aes"
+	"yangtizi/crypto/zlib"
 )
 
 func main() {

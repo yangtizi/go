@@ -4,7 +4,7 @@ import (
 	"encoding/base64"
 	"testing"
 
-	"github.com/yangtizi/go/crypto/assert"
+	"yangtizi/crypto/assert"
 )
 
 func TestAes(t *testing.T) {

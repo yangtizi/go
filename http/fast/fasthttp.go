@@ -1,11 +1,12 @@
 package fast
 
 import (
+	log "yangtizi/log/zaplog"
+
 	"github.com/valyala/fasthttp"
-	log "github.com/yangtizi/go/log/zaplog"
 )
 
-// ! import "github.com/yangtizi/go/http/fast"
+// ! import "yangtizi/http/fast"
 
 // StartServer (地址)
 func StartServer(strAddress string) {

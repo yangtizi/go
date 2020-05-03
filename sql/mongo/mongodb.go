@@ -1,7 +1,7 @@
 package mongo
 
 import (
-	log "github.com/yangtizi/go/log/zaplog"
+	log "yangtizi/log/zaplog"
 	"gopkg.in/mgo.v2"
 )
 

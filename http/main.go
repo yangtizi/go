@@ -1,8 +1,9 @@
 package main
 
 import (
+	"yangtizi/http/fast"
+
 	"github.com/valyala/fasthttp"
-	"github.com/yangtizi/go/http/fast"
 )
 
 func main() {

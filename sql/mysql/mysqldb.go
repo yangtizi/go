@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 
-	log "github.com/yangtizi/go/log/zaplog"
+	log "yangtizi/log/zaplog"
 )
 
 // TMySQLDB 单个的数据库

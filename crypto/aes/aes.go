@@ -1,7 +1,7 @@
 package aes
 
 import (
-	"github.com/yangtizi/go/crypto/openssl"
+	"yangtizi/crypto/openssl"
 )
 
 // CoAES AES加密 aes.CoAES([]byte("hello world"), []byte("1234567890123456"), []byte("0000000000000000"), "PKCS7")

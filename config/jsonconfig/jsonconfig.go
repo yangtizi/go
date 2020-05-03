@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	log "github.com/yangtizi/go/log/zaplog"
+	log "yangtizi/log/zaplog"
 )
 
 //JSONParsing 解析json文件, 文件名, 解析的JSON结构体

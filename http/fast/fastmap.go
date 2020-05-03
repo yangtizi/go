@@ -6,7 +6,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-// ! import "github.com/yangtizi/go/http/fast"
+// ! import "yangtizi/http/fast"
 
 var mpHandler sync.Map
 

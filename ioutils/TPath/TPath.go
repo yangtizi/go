@@ -4,7 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/yangtizi/go/sysutils"
+	"yangtizi/sysutils"
 )
 
 // GetTempPath 获取临时文件夹路径

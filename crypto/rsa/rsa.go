@@ -8,7 +8,7 @@ import (
 	"encoding/pem"
 	"errors"
 
-	"github.com/yangtizi/go/crypto/zlib"
+	"yangtizi/crypto/zlib"
 )
 
 func split(buf []byte, lim int) [][]byte {
@@ -19,7 +19,7 @@ func split(buf []byte, lim int) [][]byte {
 		chunks = append(chunks, chunk)
 	}
 	if len(buf) > 0 {
-		chunks = append(chunks, buf[:len(buf)])
+		chunks = append(chunks, buf[:])
 	}
 	return chunks
 }
