@@ -4,9 +4,9 @@ import (
 	"errors"
 	"sync"
 
-	"yangtizi/sysutils"
+	"github.com/yangtizi/go/sysutils"
 
-	log "yangtizi/log/zaplog"
+	log "github.com/yangtizi/go/log/zaplog"
 )
 
 // TValues 快速解析

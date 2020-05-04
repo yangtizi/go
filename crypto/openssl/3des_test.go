@@ -4,7 +4,7 @@ import (
 	"encoding/base64"
 	"testing"
 
-	"yangtizi/crypto/assert"
+	"github.com/yangtizi/go/crypto/assert"
 )
 
 func TestDes3Encrypt(t *testing.T) {

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"yangtizi/http/fast"
+	"github.com/yangtizi/go/http/fast"
 
 	"github.com/valyala/fasthttp"
 )

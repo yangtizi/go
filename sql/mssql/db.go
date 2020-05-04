@@ -5,8 +5,8 @@ import (
 	"errors"
 	"sync"
 
-	log "yangtizi/log/zaplog"
-	"yangtizi/sql/scanner"
+	log "github.com/yangtizi/go/log/zaplog"
+	"github.com/yangtizi/go/sql/scanner"
 
 	_ "github.com/denisenkom/go-mssqldb" // mssql 数据库
 )

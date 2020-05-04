@@ -1,8 +1,8 @@
 package main
 
 import (
-	"yangtizi/config/jsonconfig"
-	log "yangtizi/log/zaplog"
+	"github.com/yangtizi/go/config/jsonconfig"
+	log "github.com/yangtizi/go/log/zaplog"
 )
 
 // SConfig 配置

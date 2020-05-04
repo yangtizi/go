@@ -11,7 +11,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-// import log "yangtizi/log/zaplog"
+// import log "github.com/yangtizi/go/log/zaplog"
 
 // theZap 新的日志库,据说性能更好
 var theZap *zap.SugaredLogger

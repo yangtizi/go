@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"errors"
 
-	log "yangtizi/log/zaplog"
-	"yangtizi/sql/scanner"
+	log "github.com/yangtizi/go/log/zaplog"
+	"github.com/yangtizi/go/sql/scanner"
 )
 
 // TMsSQLDB 单个的数据库

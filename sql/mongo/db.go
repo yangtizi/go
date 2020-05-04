@@ -4,7 +4,7 @@ import (
 	"errors"
 	"sync"
 
-	log "yangtizi/log/zaplog"
+	log "github.com/yangtizi/go/log/zaplog"
 
 	_ "github.com/denisenkom/go-mssqldb" // mssql 数据库
 	"gopkg.in/mgo.v2"

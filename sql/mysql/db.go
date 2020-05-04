@@ -5,7 +5,7 @@ import (
 	"errors"
 	"sync"
 
-	log "yangtizi/log/zaplog"
+	log "github.com/yangtizi/go/log/zaplog"
 
 	_ "github.com/go-sql-driver/mysql" // mysql 数据库
 )

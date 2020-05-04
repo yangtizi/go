@@ -4,7 +4,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-// ! import "yangtizi/http/fast"
+// ! import "github.com/yangtizi/go/http/fast"
 
 func init() {
 }
