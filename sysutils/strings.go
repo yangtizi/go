@@ -88,3 +88,8 @@ func UpperCase(s string) string {
 func Trim(s string) string {
 	return strings.Trim(s, " ")
 }
+
+// TrimEx 去掉指定的内容
+func TrimEx(s string, tm string) string {
+	return strings.Trim(s, tm)
+}
