@@ -38,6 +38,37 @@ func Str2IntDef(str string, nDef int) int {
 	return n
 }
 
+// StrToUint 字符串转无符号整数
+func StrToUint(str string) (uint, error) {
+	n, err := StrToUint64(str)
+	return uint(n), err
+}
+
+// StrToUintDef 字符串转整数 带默认值
+func StrToUintDef(str string, nDef uint) uint {
+	n, err := StrToUint(str)
+
+	if err != nil {
+		return nDef
+	}
+	return n
+}
+
+// StrToUint64 字符串转无符号64整数
+func StrToUint64(str string) (uint64, error) {
+	return strconv.ParseUint(str, 10, 0)
+}
+
+// StrToIntDef 字符串转整数 带默认值
+func StrToUint64Def(str string, nDef uint64) uint64 {
+	n, err := StrToUint64(str)
+
+	if err != nil {
+		return nDef
+	}
+	return n
+}
+
 // IntToStr 整数转字符串
 func IntToStr(n int) string {
 	return strconv.Itoa(n)
