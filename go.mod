@@ -14,7 +14,7 @@ require (
 	github.com/valyala/fasthttp v1.17.0
 	go.uber.org/zap v1.16.0
 	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b
-	golang.org/x/tools v0.0.0-20201120032337-6d151481565c // indirect
+	golang.org/x/tools v0.0.0-20201120155355-20be4ac4bd6e // indirect
 	gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b // indirect
 	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
