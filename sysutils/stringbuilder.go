@@ -20,61 +20,61 @@ func NewStringBuilder() *TStringBuilder {
 }
 
 // Append 追加
-func (self *TStringBuilder) Append(s string) *TStringBuilder {
-	self.buffer.WriteString(s)
-	return self
+func (me *TStringBuilder) Append(s string) *TStringBuilder {
+	me.buffer.WriteString(s)
+	return me
 }
 
 //
 // AppendStrings .
-func (self *TStringBuilder) AppendStrings(ss ...string) *TStringBuilder {
+func (me *TStringBuilder) AppendStrings(ss ...string) *TStringBuilder {
 	for i := range ss {
-		self.buffer.WriteString(ss[i])
+		me.buffer.WriteString(ss[i])
 	}
-	return self
+	return me
 }
 
 // AppendInt .
-func (self *TStringBuilder) AppendInt(i int) *TStringBuilder {
-	self.buffer.WriteString(strconv.Itoa(i))
-	return self
+func (me *TStringBuilder) AppendInt(i int) *TStringBuilder {
+	me.buffer.WriteString(strconv.Itoa(i))
+	return me
 }
 
 // AppendInt64 .
-func (self *TStringBuilder) AppendInt64(i int64) *TStringBuilder {
-	self.buffer.WriteString(strconv.FormatInt(i, 10))
-	return self
+func (me *TStringBuilder) AppendInt64(i int64) *TStringBuilder {
+	me.buffer.WriteString(strconv.FormatInt(i, 10))
+	return me
 }
 
 // AppendFloat64 .
-func (self *TStringBuilder) AppendFloat64(f float64) *TStringBuilder {
-	self.buffer.WriteString(strconv.FormatFloat(f, 'E', -1, 64))
-	return self
+func (me *TStringBuilder) AppendFloat64(f float64) *TStringBuilder {
+	me.buffer.WriteString(strconv.FormatFloat(f, 'E', -1, 64))
+	return me
 }
 
 // Replace .
-func (self *TStringBuilder) Replace(old, new string) *TStringBuilder {
-	str := strings.Replace(self.ToString(), old, new, -1)
-	self.Clear()
-	self.buffer.WriteString(str)
-	return self
+func (me *TStringBuilder) Replace(old, new string) *TStringBuilder {
+	str := strings.Replace(me.ToString(), old, new, -1)
+	me.Clear()
+	me.buffer.WriteString(str)
+	return me
 }
 
 // Clear .
-func (self *TStringBuilder) Clear() *TStringBuilder {
+func (me *TStringBuilder) Clear() *TStringBuilder {
 	buffer := &bytes.Buffer{}
-	self.buffer = buffer
-	return self
+	me.buffer = buffer
+	return me
 }
 
 // ToString .
-func (self *TStringBuilder) ToString() string {
-	return self.buffer.String()
+func (me *TStringBuilder) ToString() string {
+	return me.buffer.String()
 }
 
 // AppendFormat 格式化
-func (self *TStringBuilder) AppendFormat(format string, a ...interface{}) *TStringBuilder {
+func (me *TStringBuilder) AppendFormat(format string, a ...interface{}) *TStringBuilder {
 	s := fmt.Sprintf(format, a...)
-	self.Append(s)
-	return self
+	me.Append(s)
+	return me
 }
