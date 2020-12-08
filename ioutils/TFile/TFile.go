@@ -61,3 +61,30 @@ func OpenRead(s string) ([]byte, error) {
 	b, err := ioutil.ReadFile(s)
 	return b, err
 }
+
+// Create 创建一个新文件， 如果文件存在，那么会直接被清空掉内容
+func Create(s string, b []byte) error {
+	return ioutil.WriteFile(s, b, 0666)
+
+	//  ioutil 包里的代码
+	// 	func WriteFile(filename string, data []byte, perm os.FileMode) error {
+	// 	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, perm)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// 	_, err = f.Write(data)
+	// 	if err1 := f.Close(); err == nil {
+	// 		err = err1
+	// 	}
+	// 	return err
+	// }
+
+	// os 包里的实现代码
+	// f, err := os.Create(s) // OpenFile(name, O_RDWR|O_CREATE|O_TRUNC, 0666)
+	// if err != nil {
+	// 	return err
+	// }
+	// f.Write(b)
+	// err = f.Close()
+	// return err
+}
