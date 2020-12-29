@@ -27,3 +27,22 @@ func ToHEX(str string) string {
 	md5str := fmt.Sprintf("%X", has)
 	return md5str
 }
+
+// BinToBin 计算MD5的16进制值
+func BinToBin(data []byte) [16]byte {
+	return mmdd55.Sum(data)
+}
+
+// BinToHex 计算小写md5
+func BinToHex(data []byte) string {
+	has := mmdd55.Sum(data)
+	md5str := fmt.Sprintf("%x", has)
+	return md5str
+}
+
+// BinToHEX 计算大写md5
+func BinToHEX(data []byte) string {
+	has := mmdd55.Sum(data)
+	md5str := fmt.Sprintf("%X", has)
+	return md5str
+}
