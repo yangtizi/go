@@ -1,10 +1,13 @@
 package ioutils
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
+
+	"github.com/yangtizi/go/crypto/md5"
 )
 
 // File .
@@ -93,4 +96,24 @@ func (*TFile) Create(s string, b []byte) error {
 	// f.Write(b)
 	// err = f.Close()
 	// return err
+}
+
+// JSON 获取文件的json值
+func (m *TFile) JSON(s string, v interface{}) error {
+	data, err := m.OpenRead(s)
+	if err != nil {
+		return err
+	}
+
+	return json.Unmarshal(data, v)
+}
+
+// MD5 计算MD5值
+func (m *TFile) MD5(s string) (string, error) {
+	data, err := m.OpenRead(s)
+	if err != nil {
+		return "", err
+	}
+
+	return md5.BinToHex(data), nil
 }
