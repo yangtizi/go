@@ -30,7 +30,7 @@ func (*TPath) GetPathRoot(strPath string) string {
 
 // GetDirectoryName 提取路径
 func (*TPath) GetDirectoryName(strPath string) string {
-	return filepath.Clean(strPath) + string(filepath.Separator)
+	return filepath.Clean(filepath.Dir(strPath)) + string(filepath.Separator)
 }
 
 // GetFileName 提取文件名
