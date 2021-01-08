@@ -30,7 +30,7 @@ func (*TPath) GetPathRoot(strPath string) string {
 
 // GetDirectoryName 提取路径
 func (*TPath) GetDirectoryName(strPath string) string {
-	return filepath.Dir(strPath)
+	return filepath.Clean(strPath) + string(filepath.Separator)
 }
 
 // GetFileName 提取文件名
@@ -44,12 +44,27 @@ func (*TPath) GetExtension(strPath string) string {
 }
 
 // GetFileNameWithoutExtension 提取无扩展名的文件名
-func (*TPath) GetFileNameWithoutExtension(strPath string) {
+func (*TPath) GetFileNameWithoutExtension(strPath string) string {
+	strFilename := filepath.Base(strPath)
 
+	for i := len(strFilename) - 1; i >= 0 && !os.IsPathSeparator(strFilename[i]); i-- {
+		if strFilename[i] == '.' {
+			return strFilename[:i]
+		}
+	}
+
+	return strFilename
 }
 
 // ChangeExtension 更换扩展名
-func (*TPath) ChangeExtension() {
+func (m *TPath) ChangeExtension(strPath string, strExt string) string {
+	for i := len(strPath) - 1; i >= 0 && !os.IsPathSeparator(strPath[i]); i-- {
+		if strPath[i] == '.' {
+			return strPath[:i] + strExt
+		}
+	}
+
+	return strPath + strExt
 }
 
 // DriveExists 检查路径中的驱动器是否存在
@@ -59,11 +74,18 @@ func (*TPath) DriveExists() {
 // GetFullPath 根据相对路径给出全路径
 func (*TPath) GetFullPath(strPath string) string {
 	strPath, _ = filepath.Abs(strPath)
-	return filepath.ToSlash(strPath) + "/"
+	return filepath.Clean(strPath) + string(filepath.Separator)
 }
 
 // HasExtension 判断是否有扩展名
-func (*TPath) HasExtension() {
+func (*TPath) HasExtension(strPath string) bool {
+	for i := len(strPath) - 1; i >= 0 && !os.IsPathSeparator(strPath[i]); i-- {
+		if strPath[i] == '.' {
+			return true
+		}
+	}
+
+	return false
 }
 
 // IsPathRooted 判断是否是绝对路径
@@ -82,7 +104,10 @@ func (*TPath) GetRandomFileName() string {
 }
 
 // GetGUIDFileName 用于产生一个唯一的文件名, 布尔参数决定名称中是否包含 -
-func (*TPath) GetGUIDFileName() string {
+func (*TPath) GetGUIDFileName(b bool) string {
+	if b {
+		return sysutils.GenGUID()
+	}
 	return sysutils.GenUUID()
 }
 
