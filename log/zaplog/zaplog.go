@@ -44,7 +44,7 @@ func init() {
 		Filename:  autologfilename(),
 		MaxSize:   50,
 		LocalTime: true,
-		Compress:  true, //是否压缩
+		Compress:  true, // 是否压缩
 		MaxAge:    60,   // 文件最多保存多少天
 	})
 	encoder := zap.NewProductionEncoderConfig()
@@ -109,7 +109,7 @@ func Error(args ...interface{}) {
 
 // Errorf ()
 func Errorf(template string, args ...interface{}) {
-	fmt.Println(template, args)
+	fmt.Printf(template, args...)
 	theZap.Errorf("[x] "+template, args...)
 }
 
