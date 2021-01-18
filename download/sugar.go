@@ -4,7 +4,7 @@ import "os"
 
 // 下载
 
-func ResumeBreakPointDownload(strFile string, strURL string, nTotal int64, cb *TCallback) error {
+func ResumeBreakPoint(strFile string, strURL string, nTotal int64, cb *TCallback) error {
 	p := NewResumeBreakPoint()
 
 	p.SetCallback(cb)
