@@ -81,6 +81,9 @@ func (m *TResumeBreakPoint) Download(strURL string) error {
 func (m *TResumeBreakPoint) Write(p []byte) (int, error) {
 	n := len(p)
 	m.nCurrent += int64(n)
+	if bOpenSurfCount {
+		nDownloaded += int64(n)
+	}
 	if m.cb != nil {
 		return n, m.cb(m.nCurrent, m.nTotal)
 	}
