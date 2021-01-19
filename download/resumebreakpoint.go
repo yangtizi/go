@@ -1,22 +1,25 @@
 package download
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 )
 
+// TCallback 回调函数
 type TCallback func(nCurrent, nTotal int64) error
 
 // TResumeBreakPoint 断点续传
 type TResumeBreakPoint struct {
-	f        *os.File   // 文件指针
-	nCurrent int64      // 当前长度
-	nTotal   int64      // 总长度
-	cb       *TCallback // 回调
+	f        *os.File  // 文件指针
+	nCurrent int64     // 当前长度
+	nTotal   int64     // 总长度
+	cb       TCallback // 回调
 }
 
+// NewResumeBreakPoint 新建断点下载类
 func NewResumeBreakPoint() *TResumeBreakPoint {
 	p := &TResumeBreakPoint{}
 	return p
@@ -66,9 +69,12 @@ func (m *TResumeBreakPoint) Download(strURL string) error {
 
 	defer resp.Body.Close()
 
-	io.Copy(m.f, io.TeeReader(resp.Body, m))
+	if resp.StatusCode != 206 && resp.StatusCode != 200 {
+		return errors.New(resp.Status)
+	}
 
-	return nil
+	_, err = io.Copy(m.f, io.TeeReader(resp.Body, m))
+	return err
 }
 
 // Write 写入操作
@@ -76,15 +82,15 @@ func (m *TResumeBreakPoint) Write(p []byte) (int, error) {
 	n := len(p)
 	m.nCurrent += int64(n)
 	if m.cb != nil {
-		return n, (*m.cb)(m.nCurrent, m.nTotal)
+		return n, m.cb(m.nCurrent, m.nTotal)
 	}
 	fmt.Printf("\r                                  ")
-	fmt.Printf("\r %d / %d", m.nCurrent, m.nTotal)
+	fmt.Printf("\r %s / %s", SizeToBytes(m.nCurrent), SizeToBytes(m.nTotal))
 	return n, nil
 }
 
 // SetCallback 设置Callback
-func (m *TResumeBreakPoint) SetCallback(cb *TCallback) {
+func (m *TResumeBreakPoint) SetCallback(cb TCallback) {
 	m.cb = cb
 }
 
