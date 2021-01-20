@@ -147,3 +147,8 @@ func Fatalf(template string, args ...interface{}) {
 func Flush() {
 	theZap.Sync()
 }
+
+// Since 给 defer 用的函数 defer zaplog.Since(time.Now())
+func Since(t time.Time) time.Duration {
+	return time.Since(t)
+}
