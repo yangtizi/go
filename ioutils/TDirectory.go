@@ -120,50 +120,60 @@ func (*TDirectory) Exists(path string) bool {
 }
 
 // IsEmpty 判断文件夹是否为空
-func (*TDirectory) IsEmpty() {
-
+func (*TDirectory) IsEmpty(strPath string) bool {
+	fd, err := os.Open("d:/aaa/")
+	if err != nil {
+		return false
+	}
+	names, _ := fd.Readdirnames(1)
+	return len(names) == 0
 }
 
 // Copy 复制文件夹
 func (*TDirectory) Copy(dstName, srcName string) {
+	// todo
 }
 
 // Move 移动文件夹
-func (*TDirectory) Move() {
-
+func (*TDirectory) Move(src, dst string) error {
+	return os.Rename(src, dst)
 }
 
 // Delete 删除文件夹, 第二个参数为 True 可删除非空文件夹
-func (*TDirectory) Delete() {
+func (m *TDirectory) Delete(strPath string, bForceDelete bool) error {
+	if bForceDelete {
+		return os.RemoveAll(strPath)
+	}
 
+	return os.Remove(strPath)
 }
 
 // GetDirectoryRoot 获取目录的根盘符, 如: C:\
-func (*TDirectory) GetDirectoryRoot() {
-
+func (*TDirectory) GetDirectoryRoot(strPath string) string {
+	return filepath.VolumeName(strPath)
 }
 
 // GetCurrentDirectory 获取当前目录
-func (*TDirectory) GetCurrentDirectory() {
-
+func (*TDirectory) GetCurrentDirectory() (string, error) {
+	return os.Getwd()
 }
 
 // SetCurrentDirectory 设置当前目录
-func (*TDirectory) SetCurrentDirectory() {
-
+func (*TDirectory) SetCurrentDirectory(strPath string) error {
+	return os.Chdir(strPath)
 }
 
 // GetLogicalDrives 获取驱动器列表; 下有举例
 func (*TDirectory) GetLogicalDrives() {
-
+	// todo
 }
 
 // GetAttributes 获取文件夹属性, 譬如只读、存档等; 下有举例
 func (*TDirectory) GetAttributes() {
-
+	// todo
 }
 
 // SetAttributes 设置文件夹属性; 下有举例
 func (*TDirectory) SetAttributes() {
-
+	// todo
 }
