@@ -16,8 +16,6 @@ import (
 // theZap 新的日志库,据说性能更好
 var theZap *zap.SugaredLogger
 
-
-
 const (
 	// DebugLevel logs are typically voluminous, and are usually disabled in
 	// production.
@@ -38,7 +36,6 @@ const (
 	// FatalLevel logs a message, then calls os.Exit(1).
 	FatalLevel
 )
-
 
 // 不要扩展名的文件
 func noExt(path string) string {
@@ -64,10 +61,10 @@ func autologfilename() string {
 func init() {
 	if theZap != nil {
 		fmt.Println("[√] zaplog 正常保存日志")
-		return 
+		return
 	}
-		NewSugar(autologfilename(), 50, true, true, 60, "2006-01-02 15:04:05.000", DebugLevel)
-	
+	NewSugar(autologfilename(), 50, true, true, 60, "2006-01-02 15:04:05.000", DebugLevel)
+
 }
 
 // NewSugar 新建一个糖
@@ -77,15 +74,15 @@ func init() {
 // @bLocalTime 是否使用本地时间
 // @bCompress 是否压缩
 // @nMaxAge 文件最多保存多少天
-// @strTimeFormat 时间格式 
+// @strTimeFormat 时间格式
 // @nLevel 日志的保存等级
-func NewSugar(strFilename string, nMaxSizeMB int, bLocalTime bool, bCompress bool, nMaxAge int, strTimeFormat string, nLevel int8 ) {
+func NewSugar(strFilename string, nMaxSizeMB int, bLocalTime bool, bCompress bool, nMaxAge int, strTimeFormat string, nLevel int8) {
 	if theZap != nil {
 		theZap.Sync()
-		theZap=nil
+		theZap = nil
 	}
 
-    fmt.Println("[√] zaplog 正常保存日志", strFilename)
+	fmt.Println("[√] zaplog 正常保存日志", strFilename)
 	syncWriter := zapcore.AddSync(&lumberjack.Logger{
 		Filename:  strFilename,
 		MaxSize:   nMaxSizeMB,
@@ -95,13 +92,12 @@ func NewSugar(strFilename string, nMaxSizeMB int, bLocalTime bool, bCompress boo
 	})
 	encoder := zap.NewProductionEncoderConfig()
 	encoder.EncodeTime = func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-		enc.AppendString(t.Format(strTimeFormat))  // 时间格式
+		enc.AppendString(t.Format(strTimeFormat)) // 时间格式
 	}
 	core := zapcore.NewCore(zapcore.NewConsoleEncoder(encoder), syncWriter, zap.NewAtomicLevelAt(zapcore.Level(nLevel)))
 
 	theZap = zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1)).Sugar()
 }
-
 
 // Printf 为了兼容
 func Printf(template string, args ...interface{}) {
