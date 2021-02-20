@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // StrToInt 字符串转整数
@@ -258,4 +259,82 @@ func Split(s string, sep string) []string {
 // usage sysutils.Join(strArr, "-") // A1-B2-C3-D4-E5-F6-G7
 func Join(a []string, sep string) string {
 	return strings.Join(a, sep)
+}
+
+// DateToStr 日期转字符串
+func DateToStr(datetime time.Time) string {
+	return datetime.Format("2006-01-02")
+}
+
+// FormatDateTimeStr 切换传统字符串变成golang字符串
+// 返回值是一种格式化后的字符串,重点来看Format参数中的指令字符
+// FormatDateTimeStr('c',now);
+// 输出为：2004-8-7 10:26:58
+// FormatDateTimeStr('yy-mm-dd',now);
+// FormatDateTimeStr('yy\mm\dd',now);
+// 输出为： 04-08-07
+// 也可以用":"来分开时间
+// FormatDateTimeStr('hh:nn:ss',now);
+// 输出为：10:32:23
+func FormatDateTimeStr(strOrigin string) string {
+	switch strOrigin {
+	case "c":
+		// c 以短时间格式显示时间，即全部是数字的表示
+		// 输出为：2004-8-7 9:55:40
+		return "2006-01-02 15:04:05"
+	case "ddddd":
+		// ddddd 以短时间格式显示年月日
+		// 输出为：2004-8-7
+		return "2006-01-02"
+	case "dddddd":
+		// dddddd 以长时间格式显示年月日
+		// 输出为：2004年8月7日
+		return "2006年1月2日"
+	case "t":
+		// t 以短时间格式显示时间
+		// 输出为 10:17
+		return "15:04"
+	case "tt":
+		// tt 以长时间格式显示时间
+		// 输出为10:18:46
+		return "15:04:05"
+
+	}
+
+	// d 对应于时间中的日期，日期是一位则显示一位，两位则显示两位
+	// 输出可能为1～31
+	// dd 和d的意义一样，但它始终是以两位来显示的
+	// 输出可能为01～31
+	strOrigin = StringReplaceAll(strOrigin, "dd", "02")
+	strOrigin = StringReplaceAll(strOrigin, "d", "2")
+
+	// h/hh,n/nn,s/ss,z/zzz 分别表示小时，分，秒,毫秒
+	strOrigin = StringReplaceAll(strOrigin, "zzz", ".000")
+	strOrigin = StringReplaceAll(strOrigin, "z", ".999")
+
+	strOrigin = StringReplaceAll(strOrigin, "ss", "05")
+	strOrigin = StringReplaceAll(strOrigin, "s", "5")
+
+	strOrigin = StringReplaceAll(strOrigin, "nn", "04")
+	strOrigin = StringReplaceAll(strOrigin, "n", "4")
+
+	strOrigin = StringReplaceAll(strOrigin, "hh", "15")
+	strOrigin = StringReplaceAll(strOrigin, "h", ".3")
+
+	// yy/yyyy 表示年
+	// FormatdateTime('yy',now);
+	// 输出为 04
+	// FormatdateTime('yyyy',now);
+	// 输出为 2004,
+	strOrigin = StringReplaceAll(strOrigin, "yyyy", "2006")
+	strOrigin = StringReplaceAll(strOrigin, "yy", "06")
+
+	// FormatdateTime('m',now);
+	// 输出为：8
+	// FormatdateTime('mm',now);
+	// 输出为 08
+	strOrigin = StringReplaceAll(strOrigin, "mm", "01")
+	strOrigin = StringReplaceAll(strOrigin, "m", "1")
+
+	return strOrigin
 }
