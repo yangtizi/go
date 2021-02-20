@@ -19,6 +19,10 @@ type TStringDynArray []string
 // TSearchOption .
 type TSearchOption int
 
+// type TFileAttribute = (faReadOnly, faHidden, faSystem, faDirectory, faArchive,
+// faDevice, faNormal, faTemporary, faSparseFile, faReparsePoint, faCompressed,
+// faOffline, faNotContentIndexed, faEncrypted, faSymLink)
+
 const (
 	_ TSearchOption = -1 + iota
 	//TopDirectoryOnly  当前目录
