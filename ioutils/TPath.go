@@ -9,6 +9,7 @@ import (
 
 // Path .
 var Path = &TPath{}
+var Separator = string(filepath.Separator)
 
 // TPath 路径相关的函数
 type TPath struct{}
@@ -30,7 +31,7 @@ func (*TPath) GetPathRoot(strPath string) string {
 
 // GetDirectoryName 提取路径
 func (*TPath) GetDirectoryName(strPath string) string {
-	return filepath.Clean(filepath.Dir(strPath)) + string(filepath.Separator)
+	return filepath.Clean(filepath.Dir(strPath)) + Separator
 }
 
 // GetFileName 提取文件名
@@ -74,7 +75,7 @@ func (*TPath) DriveExists() {
 // GetFullPath 根据相对路径给出全路径
 func (*TPath) GetFullPath(strPath string) string {
 	strPath, _ = filepath.Abs(strPath)
-	return filepath.Clean(strPath) + string(filepath.Separator)
+	return filepath.Clean(strPath) + Separator
 }
 
 // HasExtension 判断是否有扩展名
