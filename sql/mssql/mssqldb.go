@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 
-	log "github.com/yangtizi/go/log/zaplog"
+	"github.com/yangtizi/go/log/zaplog"
 	"github.com/yangtizi/go/sql/scanner"
 )
 
@@ -22,62 +22,62 @@ func NewDB(strReadConnect string) *TMsSQLDB {
 	return p
 }
 
-func (self *TMsSQLDB) init(strConnect string) {
+func (m *TMsSQLDB) init(strConnect string) {
 	db, err := sql.Open("mssql", strConnect)
 	if err == nil {
-		self.pDB = db
-		self.strConnect = strConnect
-		self.chpool = make(chan int, 30)
+		m.pDB = db
+		m.strConnect = strConnect
+		m.chpool = make(chan int, 30)
 		return
 	}
 
-	log.Errorf("数据库连接出现问题 connect = [%s]", strConnect, " err = ", err)
+	zaplog.Errorf("数据库连接出现问题 connect = [%s] err = []", strConnect, err)
 }
 
-func (self *TMsSQLDB) queryRow(strQuery string, args ...interface{}) (*scanner.TRow, error) {
-	if self.pDB == nil {
-		log.Errorf("queryRow [db == nil]")
+func (m *TMsSQLDB) queryRow(strQuery string, args ...interface{}) (*scanner.TRow, error) {
+	if m.pDB == nil {
+		zaplog.Errorf("queryRow [db == nil]")
 		return nil, errors.New("不存在DB")
 	}
 
-	self.chpool <- 1
-	row := self.pDB.QueryRow(strQuery, args...)
-	<-self.chpool
+	m.chpool <- 1
+	row := m.pDB.QueryRow(strQuery, args...)
+	<-m.chpool
 
 	return scanner.NewRow(row), nil
 }
 
-func (self *TMsSQLDB) queryRows(strQuery string, args ...interface{}) (*scanner.TRows, error) {
-	if self.pDB == nil {
-		log.Errorf("queryRows [db == nil]")
+func (m *TMsSQLDB) queryRows(strQuery string, args ...interface{}) (*scanner.TRows, error) {
+	if m.pDB == nil {
+		zaplog.Errorf("queryRows [db == nil]")
 		return nil, errors.New("不存在DB")
 	}
-	self.chpool <- 1
-	rows, err := self.pDB.Query(strQuery, args...)
-	<-self.chpool
+	m.chpool <- 1
+	rows, err := m.pDB.Query(strQuery, args...)
+	<-m.chpool
 	return scanner.NewRows(rows), err
 }
 
-func (self *TMsSQLDB) exec(strQuery string, args ...interface{}) (*scanner.TResult, error) {
-	if self.pDB == nil {
-		log.Errorf("exec [db == nil]")
+func (m *TMsSQLDB) exec(strQuery string, args ...interface{}) (*scanner.TResult, error) {
+	if m.pDB == nil {
+		zaplog.Errorf("exec [db == nil]")
 		return nil, errors.New("不存在DB")
 	}
 
-	self.chpool <- 1
-	rs, err := self.pDB.Exec(strQuery, args...)
-	<-self.chpool
+	m.chpool <- 1
+	rs, err := m.pDB.Exec(strQuery, args...)
+	<-m.chpool
 	return scanner.NewResult(rs), err
 }
 
-func (self *TMsSQLDB) transaction() (*sql.Tx, error) {
-	if self.pDB == nil {
-		log.Errorf("transaction")
+func (m *TMsSQLDB) transaction() (*sql.Tx, error) {
+	if m.pDB == nil {
+		zaplog.Errorf("transaction")
 		return nil, errors.New("不存在DB")
 	}
 
-	self.chpool <- 1
-	tx, err := self.pDB.Begin()
-	<-self.chpool
+	m.chpool <- 1
+	tx, err := m.pDB.Begin()
+	<-m.chpool
 	return tx, err
 }

@@ -15,6 +15,6 @@ func NewResult(r sql.Result) *TResult {
 }
 
 // RowsAffected 数量
-func (self *TResult) RowsAffected() (int64, error) {
-	return self.r.RowsAffected()
+func (m *TResult) RowsAffected() (int64, error) {
+	return m.r.RowsAffected()
 }

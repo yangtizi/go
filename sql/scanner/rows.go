@@ -19,8 +19,8 @@ func NewRows(rows *sql.Rows) *TRows {
 }
 
 // Unknown 未知搜索
-func (self *TRows) Unknown() ([]*string, error) {
-	columns, err := self.GetRows().Columns()
+func (m *TRows) Unknown() ([]*string, error) {
+	columns, err := m.GetRows().Columns()
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +33,7 @@ func (self *TRows) Unknown() ([]*string, error) {
 		args2 = append(args2, &sql.NullString{})
 	}
 
-	err = self.rows.Scan(args2...)
+	err = m.rows.Scan(args2...)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (self *TRows) Unknown() ([]*string, error) {
 }
 
 // Scan 新搜索
-func (self *TRows) Scan(args ...interface{}) error {
+func (m *TRows) Scan(args ...interface{}) error {
 	args2 := []interface{}{}
 
 	for _, v := range args {
@@ -64,7 +64,7 @@ func (self *TRows) Scan(args ...interface{}) error {
 		}
 	}
 
-	err := self.rows.Scan(args2...)
+	err := m.rows.Scan(args2...)
 	if err != nil {
 		return err
 	}
@@ -89,16 +89,16 @@ func (self *TRows) Scan(args ...interface{}) error {
 }
 
 // Next 下一步
-func (self *TRows) Next() bool {
-	return self.rows.Next()
+func (m *TRows) Next() bool {
+	return m.rows.Next()
 }
 
 // Close 关闭
-func (self *TRows) Close() error {
-	return self.rows.Close()
+func (m *TRows) Close() error {
+	return m.rows.Close()
 }
 
 // GetRows 得到Rows
-func (self *TRows) GetRows() *sql.Rows {
-	return self.rows
+func (m *TRows) GetRows() *sql.Rows {
+	return m.rows
 }

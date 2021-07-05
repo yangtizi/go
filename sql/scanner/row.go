@@ -19,7 +19,7 @@ func NewRow(row *sql.Row) *TRow {
 }
 
 // Scan 新的检索
-func (self *TRow) Scan(args ...interface{}) error {
+func (m *TRow) Scan(args ...interface{}) error {
 	args2 := []interface{}{}
 
 	for _, v := range args {
@@ -33,7 +33,7 @@ func (self *TRow) Scan(args ...interface{}) error {
 		}
 	}
 
-	err := self.row.Scan(args2...)
+	err := m.row.Scan(args2...)
 	if err != nil {
 		return err
 	}

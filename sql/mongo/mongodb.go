@@ -19,13 +19,13 @@ func NewDB(strConnect string) *TMongoDB {
 	return p
 }
 
-func (me *TMongoDB) init(strConnect string) {
+func (m *TMongoDB) init(strConnect string) {
 	mongo, err := mgo.Dial(strConnect)
 	if err != nil {
 		log.Errorf("%v", err)
 		return
 	}
 
-	me.pDB = mongo
-	me.strConnect = strConnect
+	m.pDB = mongo
+	m.strConnect = strConnect
 }

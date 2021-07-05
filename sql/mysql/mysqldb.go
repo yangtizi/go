@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 
-	log "github.com/yangtizi/go/log/zaplog"
+	"github.com/yangtizi/go/log/zaplog"
 )
 
 // TMySQLDB 单个的数据库
@@ -21,47 +21,47 @@ func NewDB(strReadConnect string) *TMySQLDB {
 	return p
 }
 
-func (self *TMySQLDB) init(strConnect string) {
+func (m *TMySQLDB) init(strConnect string) {
 	db, err := sql.Open("mysql", strConnect)
 	if err == nil {
-		self.pDB = db
-		self.strConnect = strConnect
-		self.chpool = make(chan int, 30)
+		m.pDB = db
+		m.strConnect = strConnect
+		m.chpool = make(chan int, 30)
 		return
 	}
 
-	log.Println("数据库连接出现问题 connect = ", strConnect, " err = ", err)
+	zaplog.Errorf("数据库连接出现问题 connect = [%s] err = []", strConnect, err)
 }
 
-func (self *TMySQLDB) queryRow(strQuery string, args ...interface{}) (*sql.Row, error) {
-	if self.pDB == nil {
+func (m *TMySQLDB) queryRow(strQuery string, args ...interface{}) (*sql.Row, error) {
+	if m.pDB == nil {
 		return nil, errors.New("不存在DB")
 	}
 
-	self.chpool <- 1
-	row := self.pDB.QueryRow(strQuery, args...)
-	<-self.chpool
+	m.chpool <- 1
+	row := m.pDB.QueryRow(strQuery, args...)
+	<-m.chpool
 	return row, nil
 }
 
-func (self *TMySQLDB) queryRows(strQuery string, args ...interface{}) (*sql.Rows, error) {
-	if self.pDB == nil {
+func (m *TMySQLDB) queryRows(strQuery string, args ...interface{}) (*sql.Rows, error) {
+	if m.pDB == nil {
 		return nil, errors.New("不存在DB")
 	}
-	self.chpool <- 1
-	rows, err := self.pDB.Query(strQuery, args...)
-	<-self.chpool
+	m.chpool <- 1
+	rows, err := m.pDB.Query(strQuery, args...)
+	<-m.chpool
 	return rows, err
 }
 
-func (self *TMySQLDB) exec(strQuery string, args ...interface{}) (sql.Result, error) {
+func (m *TMySQLDB) exec(strQuery string, args ...interface{}) (sql.Result, error) {
 
-	if self.pDB == nil {
+	if m.pDB == nil {
 		return nil, errors.New("不存在DB")
 	}
 
-	self.chpool <- 1
-	rs, err := self.pDB.Exec(strQuery, args...)
-	<-self.chpool
+	m.chpool <- 1
+	rs, err := m.pDB.Exec(strQuery, args...)
+	<-m.chpool
 	return rs, err
 }

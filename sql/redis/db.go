@@ -13,25 +13,25 @@ import (
 type TValues []interface{}
 
 // I 快速获取整数
-func (self TValues) I(n int) int {
-	if n > len(self) {
+func (m TValues) I(n int) int {
+	if n > len(m) {
 		return 0
 	}
-	if self[n] == nil {
+	if m[n] == nil {
 		return 0
 	}
-	return sysutils.StrToIntDef(string(self[n].([]byte)), 0)
+	return sysutils.StrToIntDef(string(m[n].([]byte)), 0)
 }
 
 // S 快速获取字符串
-func (self TValues) S(n int) string {
-	if n > len(self) {
+func (m TValues) S(n int) string {
+	if n > len(m) {
 		return ""
 	}
-	if self[n] == nil {
+	if m[n] == nil {
 		return ""
 	}
-	return string(self[n].([]byte))
+	return string(m[n].([]byte))
 }
 
 var mapRedis sync.Map
