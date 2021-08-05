@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"time"
 
-	uuid "github.com/satori/go.uuid"
+	uuid "github.com/yangtizi/go/sysutils/uuid"
 )
 
 // GenUUID 获取uuid xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
