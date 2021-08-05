@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/yangtizi/go/crypto/aes"
+	"github.com/yangtizi/go/crypto/gzip"
 	"github.com/yangtizi/go/crypto/zlib"
 )
 
@@ -11,6 +12,7 @@ func main() {
 	aesDemo1()
 	aesDemo2()
 	zlibDemo()
+	gzipDemo()
 }
 
 func aesDemo1() {
@@ -49,4 +51,15 @@ func zlibDemo() {
 	strWary2 := zlib.UnCompress(bufCrypto)
 	fmt.Println("解密", string(strWary2)) //
 	fmt.Println("zlibDemo -----------------")
+}
+
+func gzipDemo() {
+	a := []byte("xiaonini")
+
+	b := gzip.Compress(a)
+	fmt.Println(b)
+
+	c := gzip.UnCompress(b)
+	fmt.Println(c)
+	fmt.Println(string(c))
 }
