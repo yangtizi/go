@@ -1,13 +1,12 @@
 package ioutils
 
 import (
+	"crypto/md5"
 	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
-
-	"github.com/yangtizi/go/crypto/md5"
 )
 
 // File .
@@ -115,5 +114,5 @@ func (m *TFile) MD5(s string) (string, error) {
 		return "", err
 	}
 
-	return md5.BinToHex(data), nil
+	return fmt.Sprintf("%x", md5.Sum(data)), nil
 }
