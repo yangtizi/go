@@ -2,6 +2,7 @@ package sysutils
 
 import (
 	"encoding/hex"
+	"math/big"
 	"strconv"
 	"strings"
 	"time"
@@ -85,7 +86,17 @@ func Uint64ToStr(n uint64) string {
 	return strconv.FormatUint(n, 10)
 }
 
-// Uint64ToHex 整数转字符串
+// IntToHex 整数转成HEX字符串
+func IntToHex(n int) string {
+	return strconv.FormatInt(int64(n), 16)
+}
+
+// Int64ToHex 整数转成HEX字符串
+func Int64ToHex(n int64) string {
+	return strconv.FormatInt(n, 16)
+}
+
+// Uint64ToHex 整数转成HEX字符串
 func Uint64ToHex(n uint64) string {
 	return strconv.FormatUint(n, 16)
 }
@@ -99,6 +110,16 @@ func BinToHex(b []byte) string {
 func HexToBin(h string) ([]byte, error) {
 	b, err := hex.DecodeString(h)
 	return b, err
+}
+
+// BigIntToStr 大数转字符串
+func BigIntToStr(b *big.Int) string {
+	return b.Text(10)
+}
+
+// BigIntToHex 大数转HEX
+func BigIntToHex(b *big.Int) string {
+	return b.Text(16)
 }
 
 // StringReplace 替换字符串
