@@ -122,6 +122,16 @@ func BigIntToHex(b *big.Int) string {
 	return b.Text(16)
 }
 
+// Float64ToString
+func Float64ToString(f float64) string {
+	return strconv.FormatFloat(f, 'f', 2, 64)
+}
+
+// StringToFloat64
+func StringToFloat64(s string) (float64, error) {
+	return strconv.ParseFloat(s, 64)
+}
+
 // StringReplace 替换字符串
 func StringReplace(s, old, new string, n int) string {
 	return strings.Replace(s, old, new, n)
