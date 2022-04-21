@@ -122,6 +122,25 @@ func BigIntToHex(b *big.Int) string {
 	return b.Text(16)
 }
 
+// FloatToStr 整数转字符串
+// sysutils.FloatToStr(1.20, 2)   // 1.2
+// sysutils.FloatToStr(1.2222, 2) // 1.22
+// sysutils.FloatToStr(1.2022, 2) // 1.2
+// sysutils.FloatToStr(1.000, 2)  // 1
+func FloatToStr(f float64, nPrec int) string {
+	strFloat := strconv.FormatFloat(f, 'f', nPrec, 64)
+
+	nIndex := LastIndexOf(strFloat, ".")
+	if nIndex <= -1 {
+
+	} else {
+		strFloat = strings.TrimRight(strFloat, "0") // 去掉后面的0
+		strFloat = strings.TrimRight(strFloat, ".") // 去掉后面的.
+	}
+
+	return strFloat
+}
+
 // StringReplace 替换字符串
 func StringReplace(s, old, new string, n int) string {
 	return strings.Replace(s, old, new, n)
@@ -173,25 +192,31 @@ func Compare(a, b string) int {
 }
 
 // IndexOf 字符串匹配
-// sysutils.IndexOf("slisa", "is") // 2
+// sysutils.IndexOf("slisa", "is") // sl[is]a 2
+// sysutils.IndexOf("slisa", "s") // [s]lisa 0
 func IndexOf(s, sub string) int {
 	return strings.Index(s, sub) // -1; 没找到
 }
 
 // LastIndexOf 字符串匹配
-// sysutils.LastIndexOf("slisa", "is") // 2
+// sysutils.LastIndexOf("slisa", "is") // sl[is]a 2
+// sysutils.LastIndexOf("slisa", "s") // sli[s]a 3
 func LastIndexOf(s, sub string) int {
 	return strings.LastIndex(s, sub)
 }
 
 // IndexOfAny 字符串匹配，后面是任意包含
-// sysutils.IndexOfAny("slisa", "is") // 0
+// sysutils.IndexOfAny("slisa", "is") // [s]lisa 0
+// sysutils.IndexOfAny("slisa", "as") // [s]lisa 0
+// sysutils.IndexOfAny("slisa", "li") // s[l]isa 1
 func IndexOfAny(s, chars string) int {
 	return strings.IndexAny(s, chars)
 }
 
 // LastIndexOfAny 字符串匹配，后面是任意包含
-// sysutils.LastIndexOfAny("slisa", "is") // 3
+// sysutils.LastIndexOfAny("slisa", "as") // slis[a] 4
+// sysutils.LastIndexOfAny("slisa", "is") // sli[s]a 3
+// sysutils.LastIndexOfAny("slisa", "li") // sl[i]sa 2
 func LastIndexOfAny(s, chars string) int {
 	return strings.LastIndexAny(s, chars)
 }
