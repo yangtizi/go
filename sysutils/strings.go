@@ -24,22 +24,6 @@ func StrToIntDef(str string, nDef int) int {
 	return n
 }
 
-// Str2Int 字符串转整数
-func Str2Int(str string) (int, error) {
-	n, err := strconv.Atoi(str)
-	return n, err
-}
-
-// Str2IntDef 字符串转整数 带默认值
-func Str2IntDef(str string, nDef int) int {
-	n, err := strconv.Atoi(str)
-
-	if err != nil {
-		return nDef
-	}
-	return n
-}
-
 // StrToUint 字符串转无符号整数
 func StrToUint(str string) (uint, error) {
 	n, err := StrToUint64(str)
@@ -141,14 +125,30 @@ func FloatToStr(f float64, nPrec int) string {
 	return strFloat
 }
 
-// Float64ToString
-func Float64ToString(f float64) string {
+// Float64ToStr
+func Float64ToStr(f float64) string {
 	return strconv.FormatFloat(f, 'f', 2, 64)
 }
 
-// StringToFloat64
-func StringToFloat64(s string) (float64, error) {
+func StrToFloat(s string) (float64, error) {
+	return StrToFloat64(s)
+}
+
+// StrToFloat64
+func StrToFloat64(s string) (float64, error) {
 	return strconv.ParseFloat(s, 64)
+}
+
+func StrToFloatDef(s string, fDef float64) float64 {
+	return StrToFloat64Def(s, fDef)
+}
+
+func StrToFloat64Def(s string, fDef float64) float64 {
+	f, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return fDef
+	}
+	return f
 }
 
 // StringReplace 替换字符串
