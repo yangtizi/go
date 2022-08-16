@@ -19,3 +19,12 @@ func RandStr(n int) string {
 	}
 	return string(b)
 }
+
+// 随机 并且不报错
+func Random(n int) int {
+	if n <= 0 {
+		return 0
+	}
+
+	return rand.Intn(n)
+}
