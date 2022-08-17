@@ -8,6 +8,30 @@ import (
 	"time"
 )
 
+// 小数
+type float interface {
+	float32 | float64
+}
+
+// 整数
+type integer interface {
+	int32 | int64 | uint32 | uint64 | int
+}
+
+// 实数
+type number interface {
+	float | integer
+	// func String() string;
+}
+
+// 取绝对值
+func Abs[V number](n V) V {
+	if n < 0 {
+		return -n
+	}
+	return n
+}
+
 // StrToInt 字符串转整数
 func StrToInt(str string) (int, error) {
 	n, err := strconv.Atoi(str)
