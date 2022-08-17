@@ -64,7 +64,22 @@ func StrToUintDef(str string, nDef uint) uint {
 	return n
 }
 
-// StrToUint64 字符串转无符号64整数
+// StrToInt64 字符串转64整数
+func StrToInt64(str string) (int64, error) {
+	return strconv.ParseInt(str, 10, 0)
+}
+
+// StrToInt64Def 字符串转整数 带默认值
+func StrToInt64Def(str string, nDef int64) int64 {
+	n, err := StrToInt64(str)
+
+	if err != nil {
+		return nDef
+	}
+	return n
+}
+
+// StrToUint64 字符串转64整数
 func StrToUint64(str string) (uint64, error) {
 	return strconv.ParseUint(str, 10, 0)
 }
