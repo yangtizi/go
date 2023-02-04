@@ -1,6 +1,7 @@
 package ioutils
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 )
@@ -133,9 +134,48 @@ func (*TDirectory) IsEmpty(strPath string) bool {
 	return len(names) == 0
 }
 
+/*
+	src := "./src"
+	dst := "./dst"
+	err := CopyDirFiles(src, dst)
+	if err != nil {
+		fmt.Println(err)
+	}
+*/
 // Copy 复制文件夹
-func (*TDirectory) Copy(dstName, srcName string) {
-	// todo
+func (*TDirectory) Copy(src, dst string) error {
+	// This code uses the filepath.Walk function to recursively traverse the directory specified by src. For each file in the directory, the CopyDirFiles function opens the source file and creates a destination file. The contents of the source file are then copied to the destination file using the io.Copy function. If an error occurs during the copy, the error is returned to the caller.
+	return filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		srcPath := path
+		dstPath := filepath.Join(dst, filepath.Base(path))
+
+		if info.IsDir() {
+			return nil
+		}
+
+		srcFile, err := os.Open(srcPath)
+		if err != nil {
+			return err
+		}
+		defer srcFile.Close()
+
+		dstFile, err := os.Create(dstPath)
+		if err != nil {
+			return err
+		}
+		defer dstFile.Close()
+
+		_, err = io.Copy(dstFile, srcFile)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	})
 }
 
 // Move 移动文件夹
@@ -168,16 +208,34 @@ func (*TDirectory) SetCurrentDirectory(strPath string) error {
 }
 
 // GetLogicalDrives 获取驱动器列表; 下有举例
-func (*TDirectory) GetLogicalDrives() {
-	// todo
+func (*TDirectory) GetLogicalDrives() []string {
+	var drives []string
+	return drives
 }
 
+/*
+	fmt.Println("Name:", fi.Name())
+	fmt.Println("Size:", fi.Size())
+	fmt.Println("Mode:", fi.Mode())
+	fmt.Println("ModTime:", fi.ModTime())
+	fmt.Println("IsDir:", fi.IsDir())
+*/
 // GetAttributes 获取文件夹属性, 譬如只读、存档等; 下有举例
-func (*TDirectory) GetAttributes() {
-	// todo
+func (*TDirectory) GetAttributes(strPath string) (os.FileInfo, error) {
+	fi, err := os.Stat(strPath)
+	if err != nil {
+		return nil, err
+	}
+	return fi, nil
 }
 
 // SetAttributes 设置文件夹属性; 下有举例
-func (*TDirectory) SetAttributes() {
-	// todo
+// mode := os.FileMode(0777)
+// err := SetAttributes("./test", mode)
+func (*TDirectory) SetAttributes(strPath string, mode os.FileMode) error {
+	err := os.Chmod(strPath, mode)
+	if err != nil {
+		return err
+	}
+	return nil
 }

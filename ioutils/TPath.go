@@ -3,6 +3,7 @@ package ioutils
 import (
 	"os"
 	"path/filepath"
+	"regexp"
 
 	"github.com/yangtizi/go/sysutils"
 )
@@ -69,7 +70,9 @@ func (m *TPath) ChangeExtension(strPath string, strExt string) string {
 }
 
 // DriveExists 检查路径中的驱动器是否存在
-func (*TPath) DriveExists() {
+func (*TPath) DriveExists(strDrive string) bool {
+	_, err := os.Open(strDrive + ":\\")
+	return err == nil
 }
 
 // GetFullPath 根据相对路径给出全路径
@@ -112,10 +115,22 @@ func (*TPath) GetGUIDFileName(b bool) string {
 	return sysutils.GenUUID()
 }
 
+/*
+fmt.Println(IsValidPathChar("abc")) // true
+fmt.Println(IsValidPathChar("abc123")) // true
+fmt.Println(IsValidPathChar("abc_123")) // true
+fmt.Println(IsValidPathChar("abc-123")) // true
+fmt.Println(IsValidPathChar("abc.123")) // true
+fmt.Println(IsValidPathChar("/")) // false
+fmt.Println(IsValidPathChar(" ")) // false
+*/
 // IsValidPathChar 判断给定的字符是否能用于路径名
-func (*TPath) IsValidPathChar() {
+func (*TPath) IsValidPathChar(c string) bool {
+	validPathChar := regexp.MustCompile(`^[a-zA-Z0-9._-]+$`)
+	return validPathChar.MatchString(c)
 }
 
 // IsValidFileNameChar 判断给定的字符是否能用于文件名
-func (*TPath) IsValidFileNameChar() {
+func (m *TPath) IsValidFileNameChar(c string) bool {
+	return m.IsValidPathChar(c)
 }
