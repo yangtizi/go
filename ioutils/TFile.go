@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 )
 
@@ -63,13 +62,13 @@ func (*TFile) Delete(s string) error {
 
 // OpenRead 读取一个文件
 func (*TFile) OpenRead(s string) ([]byte, error) {
-	b, err := ioutil.ReadFile(s)
+	b, err := os.ReadFile(s)
 	return b, err
 }
 
 // Create 创建一个新文件， 如果文件存在，那么会直接被清空掉内容
 func (*TFile) Create(s string, b []byte) error {
-	return ioutil.WriteFile(s, b, 0666)
+	return os.WriteFile(s, b, 0666)
 
 	//  ioutil 包里的代码
 	// 	func WriteFile(filename string, data []byte, perm os.FileMode) error {
